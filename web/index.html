@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Ладно — спокойный и понятный учёт личного бюджета.">
+  <meta name="theme-color" content="#F5F1FC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Ладно">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Ладно — личный бюджет</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #F5F1FC; }
+    body { overscroll-behavior-y: none; }
+    /* Respect the iPhone home-indicator safe area in standalone mode. */
+    flt-glass-pane { padding-bottom: env(safe-area-inset-bottom); }
+  </style>
+</head>
+<body>
+  <script>
+    // Register our small runtime cache for offline reopening after the first visit.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch((error) => console.warn('PWA cache registration failed', error));
+      });
+    }
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

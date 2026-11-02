@@ -1,0 +1,17 @@
+{
+  "name": "Ладно — личный бюджет",
+  "short_name": "Ладно",
+  "description": "Спокойный и понятный учёт личного бюджета.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F1FC",
+  "theme_color": "#F5F1FC",
+  "lang": "ru",
+  "icons": [
+    { "src": "icons/Icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/Icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/Icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
