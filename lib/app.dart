@@ -6,16 +6,17 @@ import 'features/shell/app_shell.dart';
 
 class LadnoApp extends StatelessWidget {
   const LadnoApp({super.key, required this.repository});
+
   final BudgetRepository repository;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Ладно',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light,
-        locale: const Locale('ru', 'RU'),
-        supportedLocales: const [Locale('ru', 'RU')],
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        home: AppShell(repository: repository),
-      );
+    title: 'Ладно',
+    debugShowCheckedModeBanner: false,
+    theme: AppTheme.light,
+    locale: const Locale('ru', 'RU'),
+    supportedLocales: const [Locale('ru', 'RU')],
+    localizationsDelegates: GlobalMaterialLocalizations.delegates,
+    home: AppShell(repository: repository),
+  );
 }
