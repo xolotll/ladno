@@ -19,7 +19,7 @@ class _CategoryFormScreenState extends State<CategoryFormScreen> {
   final _name = TextEditingController();
   final _limit = TextEditingController();
   final _form = GlobalKey<FormState>();
-  static const _icons = [
+  static final List<String> _icons = [
     '🛒',
     '🚕',
     '🏠',
@@ -97,14 +97,40 @@ class _CategoryFormScreenState extends State<CategoryFormScreen> {
             const Text('Иконка', style: TextStyle(fontWeight: FontWeight.w700)),
             const SizedBox(height: 10),
             Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _icons
-                    .map((icon) => ChoiceChip(
-                        label: Text(icon, style: const TextStyle(fontSize: 19)),
-                        selected: _icon == icon,
-                        onSelected: (_) => setState(() => _icon = icon)))
-                    .toList()),
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                ..._icons.map((icon) => ChoiceChip(
+                      label: Text(icon, style: const TextStyle(fontSize: 19)),
+                      selected: _icon == icon,
+                      onSelected: (_) => setState(() => _icon = icon),
+                    )),
+                FilledButton.tonal(
+                  onPressed: _showEmojiInput,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 14,
+                    ),
+                    minimumSize: const Size(0, 48),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.add, size: 20),
+                      SizedBox(width: 6),
+                      Text(
+                        'Свой эмодзи',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 25),
             FilledButton(onPressed: _save, child: const Text('Сохранить')),
             if (widget.category != null)
@@ -117,5 +143,47 @@ class _CategoryFormScreenState extends State<CategoryFormScreen> {
   Future<void> _archive() async {
     await widget.repository.archiveCategory(widget.category!.id);
     if (mounted) Navigator.pop(context, true);
+  }
+
+  Future<void> _showEmojiInput() async {
+    final controller = TextEditingController();
+
+    final emoji = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Свой эмодзи'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          decoration: const InputDecoration(
+            hintText: 'Выбери эмодзи на клавиатуре',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Отмена'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(
+              context,
+              controller.text.trim(),
+            ),
+            child: const Text('Добавить'),
+          ),
+        ],
+      ),
+    );
+
+    controller.dispose();
+
+    if (emoji == null || emoji.isEmpty || !mounted) return;
+
+    setState(() {
+      if (!_icons.contains(emoji)) {
+        _icons.add(emoji);
+      }
+      _icon = emoji;
+    });
   }
 }
